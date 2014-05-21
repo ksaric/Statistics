@@ -12,7 +12,7 @@ public class ResultValue implements Comparable<ResultValue>, Serializable, Resul
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_UP;
     private static final MathContext DEFAULT_MATH_CONTEXT = MathContext.DECIMAL128;
 
-    public final int DEFAULT_SCALE = 10;
+    private static final int DEFAULT_SCALE = 10;
 
     public static final ResultValue ZERO = new ResultValue( 0 );
     public static final ResultValue ONE = new ResultValue( 1 );
@@ -82,12 +82,19 @@ public class ResultValue implements Comparable<ResultValue>, Serializable, Resul
 
     @Override
     public boolean equals( Object o ) {
-        if ( this == o ) return true;
-        if ( o == null || getClass() != o.getClass() ) return false;
+        if ( this == o ) {
+            return true;
+        }
+
+        if ( o == null || getClass() != o.getClass() ) {
+            return false;
+        }
 
         ResultValue resultValue = (ResultValue) o;
 
-        if ( !amount.equals( resultValue.amount ) ) return false;
+        if ( !amount.equals( resultValue.amount ) ) {
+            return false;
+        }
 
         return true;
     }

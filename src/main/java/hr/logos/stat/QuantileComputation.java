@@ -29,7 +29,9 @@ final class QuantileComputation implements Computations {
     public Result compute( final List<? extends Number> numbers ) {
         ResultValue result = ResultValue.ZERO;
 
-        if ( numbers.isEmpty() ) return result;
+        if ( numbers.isEmpty() ) {
+            return result;
+        }
 
         /* sort the numbers */
         final List<? extends Number> sortedList = numbersSorter.sort( numbers );

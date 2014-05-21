@@ -1,12 +1,15 @@
 package hr.logos.stat;
 
+import com.google.inject.AbstractModule;
+
 /**
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-public class ComputationsModule/* extends AbstractModule*/ {
+public class ComputationsModule extends AbstractModule {
 
-    /*@Override
+    @Override
     protected void configure() {
-    }*/
+    }
+
 }

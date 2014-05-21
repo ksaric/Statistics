@@ -2,6 +2,7 @@ package hr.logos.stat;
 
 import com.google.common.collect.*;
 import hr.logos.common.ResultValue;
+import net.jcip.annotations.Immutable;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -10,7 +11,8 @@ import java.util.Map;
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-public class ComputationsFactory {
+@Immutable
+public final class ComputationsFactory {
 
     private ComputationsFactory() {
     }
@@ -49,6 +51,20 @@ public class ComputationsFactory {
         return new QuantileComputation( resultValueFactory, numbersSorter, quantile );
     }
 
+    public static Computations newStandardDeviationComputation() {
+        final ResultValueFactory resultValueFactory = newResultValueFactory();
+        final Computations varianceComputation = ComputationsFactory.newVarianceComputation();
+
+        return new StandardDeviationComputation( resultValueFactory, varianceComputation );
+    }
+
+    public static Computations newVarianceComputation() {
+        final ResultValueFactory resultValueFactory = newResultValueFactory();
+        final Computations averageComputation = ComputationsFactory.newSimpleAverageComputation();
+
+        return new VarianceComputation( resultValueFactory, averageComputation );
+    }
+
     public static ResultValueFactory newResultValueFactory() {
         return new DefaultResultValueFactory();
     }
@@ -58,5 +74,6 @@ public class ComputationsFactory {
 
         return new DefaultNumbersSorter( numberComparator );
     }
+
 
 }

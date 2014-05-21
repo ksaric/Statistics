@@ -1,6 +1,5 @@
 package hr.logos.stat;
 
-import com.google.common.annotations.VisibleForTesting;
 import hr.logos.common.ResultValue;
 
 import java.util.List;
@@ -24,15 +23,9 @@ final class SumComputation implements Computations {
         /* add the numbers together, sum them */
         for ( final Number integer : number ) {
             final ResultValue currentResultValue = resultValueFactory.create( integer.doubleValue() );
-            resultValue = addResults( resultValue, currentResultValue );
+            resultValue = resultValue.add( currentResultValue );
         }
 
-        return resultValue;
-    }
-
-    @VisibleForTesting
-    ResultValue addResults( ResultValue resultValue, final ResultValue currentResultValue ) {
-        resultValue = currentResultValue.add( resultValue );
         return resultValue;
     }
 

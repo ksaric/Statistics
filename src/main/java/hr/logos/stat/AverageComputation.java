@@ -21,7 +21,9 @@ final class AverageComputation implements Computations {
 
     @Override
     public Result compute( final List<? extends Number> number ) {
-        if ( number.isEmpty() ) return ResultValue.ZERO;
+        if ( number.isEmpty() ) {
+            return ResultValue.ZERO;
+        }
 
         /* sum the numbers */
         ResultValue result = resultValueFactory.create( sumComputations.compute( number ).getAmount() );
