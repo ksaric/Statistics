@@ -65,6 +65,13 @@ public final class ComputationsFactory {
         return new VarianceComputation( resultValueFactory, averageComputation );
     }
 
+    public static Computations newCoefficientOfVariationComputation() {
+        final Computations standardDeviationComputation = newStandardDeviationComputation();
+        final Computations averageComputation = newSimpleAverageComputation();
+
+        return new CoefficientOfVariationComputation( standardDeviationComputation, averageComputation );
+    }
+
     public static ResultValueFactory newResultValueFactory() {
         return new DefaultResultValueFactory();
     }
@@ -74,6 +81,4 @@ public final class ComputationsFactory {
 
         return new DefaultNumbersSorter( numberComparator );
     }
-
-
 }

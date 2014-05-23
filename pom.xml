@@ -44,7 +44,7 @@
                 <version>0.33</version>
                 <configuration>
                     <targetClasses>
-                        <param>hr.logos.stat.*</param>
+                        <param>hr.logos.*</param>
                     </targetClasses>
                     <verbose>true</verbose>
                 </configuration>
