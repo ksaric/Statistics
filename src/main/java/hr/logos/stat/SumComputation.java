@@ -8,7 +8,7 @@ import java.util.List;
  * @author ksaric
  */
 
-final class SumComputation implements Computations {
+final class SumComputation implements Computation {
 
     private final ResultValueFactory resultValueFactory;
 
@@ -28,5 +28,4 @@ final class SumComputation implements Computations {
 
         return resultValue;
     }
-
 }

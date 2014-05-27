@@ -9,7 +9,7 @@ import java.util.List;
  * @author ksaric
  */
 
-final class MedianComputation implements Computations {
+final class MedianComputation implements Computation {
 
     private final ResultValueFactory resultValueFactory;
     private final NumbersSorter numbersSorter;

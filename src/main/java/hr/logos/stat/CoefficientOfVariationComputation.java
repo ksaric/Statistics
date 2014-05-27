@@ -11,15 +11,15 @@ import java.util.List;
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-public class CoefficientOfVariationComputation implements Computations {
+public class CoefficientOfVariationComputation implements Computation {
 
-    private final Computations standardDeviationComputation;
-    private final Computations averageComputation;
+    private final Computation standardDeviationComputation;
+    private final Computation averageComputation;
 
     @Inject
     public CoefficientOfVariationComputation(
-            Computations standardDeviationComputation,
-            Computations averageComputation
+            Computation standardDeviationComputation,
+            Computation averageComputation
     ) {
         this.standardDeviationComputation = standardDeviationComputation;
         this.averageComputation = averageComputation;

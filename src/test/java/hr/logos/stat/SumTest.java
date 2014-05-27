@@ -1,11 +1,16 @@
 package hr.logos.stat;
 
 import com.google.common.collect.*;
+import hr.logos.common.StringRepresentation;
+import hr.logos.common.StringRepresentationFactory;
+import hr.logos.functions.SumFunction;
 import hr.logos.stat.generators.IntegerListGenerator;
 import hr.logos.stat.generators.NumberOfRuns;
 import net.java.quickcheck.generator.iterable.Iterables;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jdice.calc.Calculator;
+import org.jdice.calc.Num;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,21 +26,42 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 public class SumTest {
 
-    public static final int NUM_OF_RUNS = NumberOfRuns.XL.getNumOfRuns();
+    public static final int NUM_OF_RUNS = NumberOfRuns.M.getNumOfRuns();
 
     protected final Log logger = LogFactory.getLog( getClass() );
 
-
     @Test
     public void testSimpleSum() throws Exception {
+        //When
+        final Num calculatedNumber = Calculator.builder()
+                .use( SumFunction.class )
+                .expression( "SUM(1, 2, 3, 4)" )
+                .calculate();
+
+        //Then
+        final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
+
+        Assert.assertThat( 0, equalTo( resultAmount.compareTo( BigDecimal.TEN ) ) );
+    }
+
+    @Test
+    public void testSimpleSumExpression() throws Exception {
         //Before
         final List<Integer> currentIntegers = Lists.newArrayList( 1, 2, 3, 4 );
 
         //When
-        final Result sumCompute = ComputationsFactory.newSumComputation().compute( currentIntegers );
+        final StringRepresentation<List<? extends Number>> stringRepresentation =
+                StringRepresentationFactory.newSumStringRepresentation();
+
+        final String expression = stringRepresentation.respresentString( currentIntegers );
+
+        final Num calculatedNumber = Calculator.builder()
+                .use( SumFunction.class )
+                .expression( expression )
+                .calculate();
 
         //Then
-        final BigDecimal resultAmount = sumCompute.getAmount();
+        final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
 
         Assert.assertThat( 0, equalTo( resultAmount.compareTo( BigDecimal.TEN ) ) );
     }
@@ -46,10 +72,18 @@ public class SumTest {
         final List<Long> currentIntegers = Lists.newArrayList( 1l, 2l, 3l, 4l );
 
         //When
-        final Result sumCompute = ComputationsFactory.newSumComputation().compute( currentIntegers );
+        final StringRepresentation<List<? extends Number>> stringRepresentation =
+                StringRepresentationFactory.newSumStringRepresentation();
+
+        final String expression = stringRepresentation.respresentString( currentIntegers );
+
+        final Num calculatedNumber = Calculator.builder()
+                .use( SumFunction.class )
+                .expression( expression )
+                .calculate();
 
         //Then
-        final BigDecimal resultAmount = sumCompute.getAmount();
+        final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
 
         Assert.assertThat( 0, equalTo( resultAmount.compareTo( BigDecimal.TEN ) ) );
     }
@@ -60,10 +94,18 @@ public class SumTest {
         final List<Float> currentIntegers = Lists.newArrayList( 1f, 2f, 3f, 4f );
 
         //When
-        final Result sumCompute = ComputationsFactory.newSumComputation().compute( currentIntegers );
+        final StringRepresentation<List<? extends Number>> stringRepresentation =
+                StringRepresentationFactory.newSumStringRepresentation();
+
+        final String expression = stringRepresentation.respresentString( currentIntegers );
+
+        final Num calculatedNumber = Calculator.builder()
+                .use( SumFunction.class )
+                .expression( expression )
+                .calculate();
 
         //Then
-        final BigDecimal resultAmount = sumCompute.getAmount();
+        final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
 
         Assert.assertThat( 0, equalTo( resultAmount.compareTo( BigDecimal.TEN ) ) );
     }
@@ -74,27 +116,44 @@ public class SumTest {
         final List<Double> currentIntegers = Lists.newArrayList( 1d, 2d, 3d, 4d );
 
         //When
-        final Result sumCompute = ComputationsFactory.newSumComputation().compute( currentIntegers );
+        final StringRepresentation<List<? extends Number>> stringRepresentation =
+                StringRepresentationFactory.newSumStringRepresentation();
+
+        final String expression = stringRepresentation.respresentString( currentIntegers );
+
+        final Num calculatedNumber = Calculator.builder()
+                .use( SumFunction.class )
+                .expression( expression )
+                .calculate();
 
         //Then
-        final BigDecimal resultAmount = sumCompute.getAmount();
+        final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
 
         Assert.assertThat( 0, equalTo( resultAmount.compareTo( BigDecimal.TEN ) ) );
     }
 
+    // todo: sum() not working, no support for no-arg. Error message should be more clear than:
+    // java.text.ParseException: Exception while parsing 'sum()'. Can't find extension 'sum' or org.jdice.calc.Num with name 'sum'
 
     @Test
     public void testSimpleSumGenerator() throws Exception {
         //Before
         for ( final List<Integer> currentIntegers : Iterables.toIterable( IntegerListGenerator.POSITIVE_INTEGER_LIST_GENERATOR, NUM_OF_RUNS ) ) {
             //When
-            final Result sumCompute = ComputationsFactory.newSumComputation().compute( currentIntegers );
+            final StringRepresentation<List<? extends Number>> stringRepresentation =
+                    StringRepresentationFactory.newSumStringRepresentation();
+
+            final String expression = stringRepresentation.respresentString( currentIntegers );
+
+            final Num calculatedNumber = Calculator.builder()
+                    .use( SumFunction.class )
+                    .expression( expression )
+                    .calculate();
 
             //Then
-            final BigDecimal result = sumCompute.getAmount();
+            final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
 
-            Assert.assertThat( result, greaterThanOrEqualTo( BigDecimal.ZERO ) );
+            Assert.assertThat( resultAmount, greaterThanOrEqualTo( BigDecimal.ZERO ) );
         }
     }
-
 }

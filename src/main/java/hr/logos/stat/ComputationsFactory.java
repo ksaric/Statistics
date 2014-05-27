@@ -17,33 +17,35 @@ public final class ComputationsFactory {
     private ComputationsFactory() {
     }
 
-    public static Computations newSimpleAverageComputation() {
+    public static Computation newSimpleAverageComputation() {
         final ResultValueFactory resultValueFactory = newResultValueFactory();
-        final Computations sumComputation = ComputationsFactory.newSumComputation();
+        final Computation sumComputation = ComputationsFactory.newSumComputation();
+        /*final StringRepresentation<List<? extends Number>> stringRepresentation =
+                StringRepresentationFactory.newSumStringRepresentation();*/
 
-        return new AverageComputation( resultValueFactory, sumComputation );
+        return new AverageComputation( resultValueFactory, sumComputation, /*stringRepresentation*/null );
     }
 
-    public static Computations newSumComputation() {
+    public static Computation newSumComputation() {
         final ResultValueFactory resultValueFactory = newResultValueFactory();
         return new SumComputation( resultValueFactory );
     }
 
-    public static Computations newModComputation() {
+    public static Computation newModComputation() {
         final Map<ResultValue, Integer> occurenceCountMap = Maps.newHashMap();
         final ResultValueFactory resultValueFactory = newResultValueFactory();
 
         return new ModComputation( occurenceCountMap, resultValueFactory );
     }
 
-    public static Computations newMedianComputation() {
+    public static Computation newMedianComputation() {
         final ResultValueFactory resultValueFactory = newResultValueFactory();
         final NumbersSorter numbersSorter = newDefaultNumbersSorter();
 
         return new MedianComputation( resultValueFactory, numbersSorter );
     }
 
-    public static Computations newQuantileComputations( final Integer quantile ) {
+    public static Computation newQuantileComputations( final Integer quantile ) {
         /* sort the numbers */
         final ResultValueFactory resultValueFactory = newResultValueFactory();
         final NumbersSorter numbersSorter = newDefaultNumbersSorter();
@@ -51,25 +53,29 @@ public final class ComputationsFactory {
         return new QuantileComputation( resultValueFactory, numbersSorter, quantile );
     }
 
-    public static Computations newStandardDeviationComputation() {
+    public static Computation newStandardDeviationComputation() {
         final ResultValueFactory resultValueFactory = newResultValueFactory();
-        final Computations varianceComputation = ComputationsFactory.newVarianceComputation();
+        final Computation varianceComputation = ComputationsFactory.newVarianceComputation();
 
         return new StandardDeviationComputation( resultValueFactory, varianceComputation );
     }
 
-    public static Computations newVarianceComputation() {
+    public static Computation newVarianceComputation() {
         final ResultValueFactory resultValueFactory = newResultValueFactory();
-        final Computations averageComputation = ComputationsFactory.newSimpleAverageComputation();
+        final Computation averageComputation = ComputationsFactory.newSimpleAverageComputation();
 
         return new VarianceComputation( resultValueFactory, averageComputation );
     }
 
-    public static Computations newCoefficientOfVariationComputation() {
-        final Computations standardDeviationComputation = newStandardDeviationComputation();
-        final Computations averageComputation = newSimpleAverageComputation();
+    public static Computation newCoefficientOfVariationComputation() {
+        final Computation standardDeviationComputation = newStandardDeviationComputation();
+        final Computation averageComputation = newSimpleAverageComputation();
 
         return new CoefficientOfVariationComputation( standardDeviationComputation, averageComputation );
+    }
+
+    public static Transformation newLinearTransformation() {
+        return new LinearTransformation();
     }
 
     public static ResultValueFactory newResultValueFactory() {

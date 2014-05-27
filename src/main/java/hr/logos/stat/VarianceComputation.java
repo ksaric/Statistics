@@ -2,20 +2,21 @@ package hr.logos.stat;
 
 import hr.logos.common.ResultValue;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-public class VarianceComputation implements Computations {
+public class VarianceComputation implements Computation {
 
-    private final Computations averageComputations;
+    private final Computation averageComputation;
     private final ResultValueFactory resultValueFactory;
 
-    VarianceComputation( final ResultValueFactory resultValueFactory, Computations averageComputations ) {
+    VarianceComputation( final ResultValueFactory resultValueFactory, Computation averageComputation ) {
         this.resultValueFactory = resultValueFactory;
-        this.averageComputations = averageComputations;
+        this.averageComputation = averageComputation;
     }
 
     @Override
@@ -26,20 +27,22 @@ public class VarianceComputation implements Computations {
             return ResultValue.ZERO;
         }
 
-        final Result avg = averageComputations.compute( numbers );
+        final Result avg = averageComputation.compute( numbers );
 
         ResultValue deltaSum = ResultValue.ZERO;
         deltaSum = calculateDeltaSum( numbers, deltaSum, avg );
 
         /* sum divide */
-        result = deltaSum.divide( resultValueFactory.create( numbers.size() ) );
+        result = deltaSum.divide( resultValueFactory.create( numbers.size() - 1 ) );
         return result;
     }
 
-    private ResultValue calculateDeltaSum( List<? extends Number> numbers, ResultValue deltaSum, Result avg ) {
+    private <T> ResultValue calculateDeltaSum( List<? extends Number> numbers, ResultValue deltaSum, Result avg ) {
         for ( final Number number : numbers ) {
             final ResultValue currentNumber = resultValueFactory.create( number.doubleValue() );
-            final ResultValue average = resultValueFactory.create( avg.getAmount() );
+
+            final BigDecimal amount = avg.getAmount();
+            final ResultValue average = resultValueFactory.create( amount );
 
             final ResultValue delta = currentNumber.subtract( average );
 

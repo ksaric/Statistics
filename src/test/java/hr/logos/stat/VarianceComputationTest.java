@@ -13,18 +13,18 @@ public class VarianceComputationTest {
     @Test
     public void testSimpleStandardDeviation() throws Exception {
         //Before
-        final List<Integer> currentIntegers = Lists.newArrayList( 2, 4, 4, 4, 5, 5, 7, 9 );
+        final List<Integer> currentIntegers = Lists.newArrayList( 87, 90, 92, 90, 86, 91, 91, 89, 94, 90 );
 
         //When
         final Result sumCompute = ComputationsFactory.newVarianceComputation().compute( currentIntegers );
 
         //Then
         final BigDecimal resultAmount = sumCompute.getAmount();
-        Assert.assertThat( scaleBD( BigDecimal.valueOf( 4 ) ), Matchers.equalTo( scaleBD( resultAmount ) ) );
+        Assert.assertThat( scaleBD( BigDecimal.valueOf( 5.333 ) ), Matchers.equalTo( scaleBD( resultAmount ) ) );
     }
 
     private static BigDecimal scaleBD( final BigDecimal bigDecimal ) {
-        return bigDecimal.setScale( 8, BigDecimal.ROUND_HALF_UP ).stripTrailingZeros();
+        return bigDecimal.setScale( 3, BigDecimal.ROUND_HALF_UP ).stripTrailingZeros();
     }
 
 }

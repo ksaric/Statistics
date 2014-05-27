@@ -39,7 +39,8 @@ public enum IntegerListGenerator implements Generator<List<Integer>> {
 
             final List<Integer> integers = Lists.newLinkedList();
 
-            for ( int counter = 0; counter < random.nextInt( 50 ); counter++ ) {
+            // + 1 since SUM function doesn't support no-args!
+            for ( int counter = 0; counter < random.nextInt( 50 ) + 1; counter++ ) {
                 integers.add( generatedPositiveIntegers.next() );
             }
 

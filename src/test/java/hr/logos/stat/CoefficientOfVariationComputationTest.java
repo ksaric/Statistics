@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -38,7 +39,10 @@ public class CoefficientOfVariationComputationTest {
                 .compute( numbers );
 
         //Then
-        Assert.assertThat( medianCompute.getAmount(), equalTo( new ResultValue( 0.0257 ).getAmount() ) );
+        Assert.assertThat( scaleBD( medianCompute.getAmount() ), equalTo( scaleBD( new ResultValue( 0.0257 ).getAmount() ) ) );
     }
 
+    private static BigDecimal scaleBD( final BigDecimal bigDecimal ) {
+        return bigDecimal.setScale( 3, BigDecimal.ROUND_HALF_UP ).stripTrailingZeros();
+    }
 }

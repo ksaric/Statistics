@@ -9,7 +9,7 @@ import java.util.Map;
  * @author ksaric
  */
 
-final class ModComputation implements Computations {
+final class ModComputation implements Computation {
 
     private final Map<ResultValue, Integer> occurenceCountMap;
     private final ResultValueFactory resultValueFactory;

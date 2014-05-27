@@ -144,6 +144,14 @@
         </dependency>-->
         <!-- TESTING SUPPORT -->
 
+        <!-- JCALC -->
+        <dependency>
+            <groupId>org.jdice</groupId>
+            <artifactId>jcalc</artifactId>
+            <version>0.4b</version>
+        </dependency>
+        <!-- JCALC -->
+
         <!-- GUICE -->
         <dependency>
             <groupId>com.google.inject</groupId>

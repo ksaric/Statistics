@@ -12,14 +12,14 @@ import java.util.List;
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-class StandardDeviationComputation implements Computations {
+class StandardDeviationComputation implements Computation {
 
-    private final Computations varianceComputation;
+    private final Computation varianceComputation;
     private final ResultValueFactory resultValueFactory;
 
     StandardDeviationComputation(
             final ResultValueFactory resultValueFactory,
-            final Computations varianceComputation
+            final Computation varianceComputation
     ) {
         this.resultValueFactory = resultValueFactory;
         this.varianceComputation = varianceComputation;
@@ -27,15 +27,17 @@ class StandardDeviationComputation implements Computations {
 
     @Override
     public Result compute( final List<? extends Number> numbers ) {
+        ResultValue result = ResultValue.ZERO;
+
         if ( numbers.isEmpty() ) {
-            return ResultValue.ZERO;
+            return result;
         }
 
         final ResultValue variance = resultValueFactory.create( varianceComputation.compute( numbers ).getAmount() );
 
         return Optional
                 .fromNullable( resultValueFactory.create( sqrt( variance ) ) )
-                .or( ResultValue.ZERO );
+                .or( result );
     }
 
     @VisibleForTesting

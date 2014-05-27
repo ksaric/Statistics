@@ -9,7 +9,7 @@ import java.util.List;
  * @author ksaric
  */
 
-final class QuantileComputation implements Computations {
+final class QuantileComputation implements Computation {
 
     private final NumbersSorter numbersSorter;
     private final ResultValueFactory resultValueFactory;
