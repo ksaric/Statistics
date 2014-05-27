@@ -9,14 +9,14 @@ import java.util.List;
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-final class SumStringRepresenetation implements StringRepresentation<List<? extends Number>> {
+final class ModStringRepresenetation implements StringRepresentation<List<? extends Number>> {
 
     protected final Log logger = LogFactory.getLog( getClass() );
 
     @Override
     public String respresentString( final List<? extends Number> representable ) {
         final String formattedString = String.format(
-                "SUM %s", representable.toString()
+                "MOD %s", representable.toString()
                         .replace( "[", "(" )
                         .replace( "]", ")" )
         );

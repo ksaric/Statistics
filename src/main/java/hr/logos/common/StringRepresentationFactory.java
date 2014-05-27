@@ -19,4 +19,8 @@ public class StringRepresentationFactory {
         return new AvgStringRepresenetation();
     }
 
+    public static StringRepresentation<List<? extends Number>> newModStringRepresentation() {
+        return new ModStringRepresenetation();
+    }
+
 }

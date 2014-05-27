@@ -81,20 +81,28 @@ public class AverageTest {
         Assert.assertThat( new ResultValue( 0 ).getAmount(), equalTo( result.getAmount() ) );
     }
 
+    @Ignore
     @Test
     public void testSimpleAverageIntegerPropertyNumbers() throws Exception {
         for ( final List<Integer> currentIntegers : Iterables.toIterable( IntegerListGenerator.INTEGER_LIST_GENERATOR, NUM_OF_RUNS ) ) {
 
-            //When
-            final Result result = ComputationsFactory.newSimpleAverageComputation().compute( currentIntegers );
-            final Result sumCompute = ComputationsFactory.newSumComputation().compute( currentIntegers );
+            //Before
+            final StringRepresentation<List<? extends Number>> representation =
+                    StringRepresentationFactory.newAvgStringRepresentation();
 
-            final ResultValue originalNumber = new ResultValue( result.getAmount() )
-                    .multiply( new ResultValue( currentIntegers.size() ) );
+            final String expression = representation.respresentString( currentIntegers );
+
+            final Num calculatedNumber = Calculator.builder()
+                    .use( AvgFunction.class )
+                    .expression( expression )
+                    .calculate();
 
             //Then
-            Assert.assertNotNull( result.getAmount() );
-            Assert.assertThat( scaleBD( sumCompute.getAmount() ), equalTo( scaleBD( originalNumber.getAmount() ) ) );
+            final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
+
+            Assert.assertThat( 0, equalTo( scaleBD( resultAmount ).compareTo(
+                            scaleBD( calculatedNumber.toBigDecimal().multiply( BigDecimal.valueOf( currentIntegers.size() ) ) ) ) )
+            );
         }
     }
 

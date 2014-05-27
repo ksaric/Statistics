@@ -1,27 +1,22 @@
 package hr.logos.common;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import java.util.List;
 
 /**
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-final class AvgStringRepresenetation implements StringRepresentation<List<? extends Number>> {
+final class AvgStringRepresenetation extends AbstractNumberListStringRepresentation implements StringRepresentation<List<? extends Number>> {
 
-    protected final Log logger = LogFactory.getLog( getClass() );
+    public static final String FUNCTION_NAME = "AVG";
 
     @Override
     public String respresentString( final List<? extends Number> representable ) {
-        final String formattedString = String.format( "AVG %s", representable.toString()
-                        .replace( "[", "(" )
-                        .replace( "]", ")" )
-        );
+        return getRepresentation( representable );
+    }
 
-        logger.info( formattedString );
-
-        return formattedString;
+    @Override
+    protected String getFunctionString() {
+        return FUNCTION_NAME;
     }
 }
