@@ -6,11 +6,11 @@ import java.util.List;
  * @author ksaric, pfh (Kristijan Šarić)
  */
 
-final class ModStringRepresenetation extends AbstractNumberListStringRepresentation {
+final class MedianStringRepresenetation extends AbstractNumberListStringRepresentation {
 
     @Override
     protected String getFunctionString() {
-        return "MOD";
+        return "MEDIAN";
     }
 
     @Override

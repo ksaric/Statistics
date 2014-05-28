@@ -23,4 +23,8 @@ public class StringRepresentationFactory {
         return new ModStringRepresenetation();
     }
 
+    public static StringRepresentation<List<? extends Number>> newMedianStringRepresentation() {
+        return new MedianStringRepresenetation();
+    }
+
 }

@@ -2,6 +2,8 @@ package hr.logos.stat;
 
 import com.google.common.collect.*;
 import hr.logos.common.ResultValue;
+import hr.logos.common.StringRepresentation;
+import hr.logos.common.StringRepresentationFactory;
 import hr.logos.functions.ModFunction;
 import hr.logos.stat.generators.NumberOfRuns;
 import org.apache.commons.logging.Log;
@@ -67,13 +69,23 @@ public class ModTest {
     @Test
     public void testSimpleModEven1() throws Exception {
         //Before
-        final List<Integer> currentIntegers = Lists.newArrayList( 1, 2, 3, 4, 5, 5 );
+        final List<Integer> numbers = Lists.newArrayList( 1, 2, 3, 4, 5, 5 );
 
         //When
-        final Result medianCompute = ComputationsFactory.newModComputation().compute( currentIntegers );
+        final StringRepresentation<List<? extends Number>> representation =
+                StringRepresentationFactory.newModStringRepresentation();
+
+        final String expression = representation.respresentString( numbers );
+
+        final Num calculatedNumber = Calculator.builder()
+                .use( ModFunction.class )
+                .expression( expression )
+                .calculate();
 
         //Then
-        Assert.assertThat( medianCompute.getAmount(), equalTo( new ResultValue( 5 ).getAmount() ) );
+        final BigDecimal resultAmount = calculatedNumber.toBigDecimal();
+
+        Assert.assertThat( BigDecimal.valueOf( 5 ), equalTo( resultAmount ) );
     }
 
     @Test
